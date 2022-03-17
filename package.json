@@ -1,0 +1,27 @@
+{
+  "name": "literature-adventure",
+  "version": "1.0.0",
+  "description": "A simple Banckend to practie",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoffeESIME/literature-adventure.git"
+  },
+  "author": "Fabian and Ruben 3Pillar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CoffeESIME/literature-adventure/issues"
+  },
+  "homepage": "https://github.com/CoffeESIME/literature-adventure#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "morgan": "^1.10.0",
+    "mssql": "^8.0.2",
+    "nodemon": "^2.0.15"
+  }
+}
