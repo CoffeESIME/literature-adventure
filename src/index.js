@@ -1,9 +1,17 @@
 const express = require("express");
 const morgan = require("morgan");
+const cors = require('cors');
+
+const clientsRouter = require('./routes/client.routes');
 
 const app = express();
+const port = 3000;
 
-app.listen(3000);
+app.use(clientsRouter);
+app.use(cors());
+app.use(express.json());
 
-console.log("El server en el 3000");
-console.log('Tu comentario esta mal');
+app.listen(port, () => {
+    console.log('Server is up on port ' + port);
+});
+
