@@ -1,10 +1,10 @@
 const sql = require("mssql");
-
+const dotenv = require('dotenv').config();
 const dbsettings = {
-  user: "training",
-  password: "Database24$",
-  server: "GDL-LAP-295",
-  database: "libreria_esau",
+  user: process.env.DB_USER,
+  password:process.env.DB_PASSWORD,
+  server: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,
   options: {
     trustServerCertificate: true,
   },
