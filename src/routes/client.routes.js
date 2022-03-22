@@ -2,6 +2,6 @@ const express = require('express');
 const router = new express.Router();
 const getClients = require("../controllers/client.controller.js");
 
-router.get('/animes', getClients);
+router.get('/clients', getClients);
 
 module.exports = router;
