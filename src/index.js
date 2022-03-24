@@ -6,7 +6,8 @@ const clientsRouter = require('./routes/client.routes');
 const employeesRouter = require('./routes/employee.routes');
 
 const app = express();
-const port = 4000;
+
+const port = process.env.APP_PORT;
 
 app.use(morgan('dev'));
 app.use(cors());
