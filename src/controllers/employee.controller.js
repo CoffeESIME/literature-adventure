@@ -15,4 +15,26 @@ const getEmployees = async (req, res) => {
   }
 };
 
-module.exports = {getEmployees};
+const addEmployee = async (req, res) => {
+  const {name, telephone, address, salary } = req.body;
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input("name", sql.VarChar, name)
+      .input("phone", sql.VarChar, telephone)
+      .input("address", sql.VarChar, address)
+      .input("salary", sql.Float, salary)
+      .query(
+        "INSERT INTO [libreria_esau].[dbo].[employee] ([NAME],[PHONE],[ADDRESS],[SALARY]) VALUES (@name,  @phone, @address, @salary)"
+      );
+      console.log(result)
+    res.json({ "rowAffected": result.rowsAffected });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+  
+};
+
+module.exports = {getEmployees, addEmployee};
