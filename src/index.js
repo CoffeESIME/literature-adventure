@@ -5,6 +5,7 @@ const dotenv= require('dotenv').config();
 
 const clientsRouter = require('./routes/client.routes');
 const employeesRouter = require('./routes/employee.routes');
+const booksRouter = require('./routes/book.routes');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.use(clientsRouter);
 app.use(employeesRouter);
+app.use(booksRouter);
 
 app.listen(port, () => {
     console.log('Server is up on port ' + port);
