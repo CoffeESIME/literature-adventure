@@ -7,7 +7,7 @@ const getBooks = async (req, res) => {
     const result = await pool
       .request()
       .query(
-        "SELECT [ID_BOOK],[NAME],[DESCRIPTION],[PRICE],[STOCK],[ID_AUTHOR] FROM [libreria_esau].[dbo].[books]"
+        "SELECT Books.ID_BOOK, Books.NAME as TITLE, PRICE, STOCK, Author.[NAME] as AUTHOR  FROM dbo.books as Books JOIN dbo.authors as Author ON Books.ID_AUTHOR = Author.ID_AUTHOR"
       );
     res.json(result.recordset);
   } catch (error) {
@@ -39,7 +39,29 @@ const addBook = async (req, res) => {
   
 };
 
+const addAuthor = async (req, res) => {
+  const {name, nationality } = req.body;
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input("name", sql.VarChar, name)
+      .input("nationality", sql.VarChar, nationality)
+      .query(
+        "INSERT INTO [libreria_esau].[dbo].[authors] ([NAME],[NATIONALITY]) VALUES (@name,  @nationality)"
+      );
+      console.log(result)
+    res.json({ "rowAffected": result.rowsAffected });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+  
+};
+
+
 module.exports ={
     getBooks, 
-    addBook
+    addBook,
+    addAuthor
 }
