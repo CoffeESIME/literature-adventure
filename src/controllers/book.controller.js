@@ -7,7 +7,7 @@ const getBooks = async (req, res) => {
     const result = await pool
       .request()
       .query(
-        "SELECT Books.ID_BOOK, Books.NAME as TITLE, PRICE, STOCK, Author.[NAME] as AUTHOR  FROM dbo.books as Books JOIN dbo.authors as Author ON Books.ID_AUTHOR = Author.ID_AUTHOR"
+        "SELECT TITLE, PRICE, STOCK, AUTHOR  FROM [dbo].[vw_book_author]"
       );
     res.json(result.recordset);
   } catch (error) {
@@ -16,7 +16,8 @@ const getBooks = async (req, res) => {
 };
 
 const addBook = async (req, res) => {
-  const {name, description, price, stock, id_author } = req.body;
+  const {name, description, price, stock, author } = req.body;
+  console.log(name, description, price, stock,  author);
   try {
     const pool = await getConnection();
     const result = await pool
@@ -25,11 +26,10 @@ const addBook = async (req, res) => {
       .input("description", sql.VarChar, description)
       .input("price", sql.Float, price)
       .input("stock", sql.Int, stock)
-      .input("id_author", sql.Int, id_author )
+      .input("author", sql.VarChar, author )
       .query(
-        "INSERT INTO [libreria_esau].[dbo].[books] ([NAME],[DESCRIPTION],[PRICE],[STOCK],[ID_AUTHOR]) VALUES (@name,  @description, @price, @stock, @id_author)"
+        "INSERT INTO [libreria_esau].[dbo].[vw_book_author] ([TITLE],[DESCRIPTION],[PRICE],[STOCK],[AUTHOR]) VALUES (@name,  @description, @price, @stock, @author)"
       );
-
       console.log(result)
     res.json({ "rowAffected": result.rowsAffected });
   } catch (error) {
@@ -59,9 +59,24 @@ const addAuthor = async (req, res) => {
   
 };
 
+const getAuthors = async (req,res)=>{
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .query('SELECT [ID_AUTHOR],[NAME] FROM [libreria_esau].[dbo].[authors]'
+      );
+    res.json(result.recordset);
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log(error)
+  }
+}
+
 
 module.exports ={
     getBooks, 
     addBook,
-    addAuthor
+    addAuthor,
+    getAuthors
 }
