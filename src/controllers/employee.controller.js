@@ -16,13 +16,13 @@ const getEmployees = async (req, res) => {
 };
 
 const addEmployee = async (req, res) => {
-  const {name, telephone, address, salary } = req.body;
+  const {name, phone, address, salary } = req.body;
   try {
     const pool = await getConnection();
     const result = await pool
       .request()
       .input("name", sql.VarChar, name)
-      .input("phone", sql.VarChar, telephone)
+      .input("phone", sql.VarChar, phone)
       .input("address", sql.VarChar, address)
       .input("salary", sql.Float, salary)
       .query(
